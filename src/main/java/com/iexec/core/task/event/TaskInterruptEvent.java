@@ -29,22 +29,22 @@ import java.math.BigInteger;
 @Getter
 @NoArgsConstructor
 @Builder
-public class TaskInterruptedEvent {
+public class TaskInterruptEvent {
 
 	private String chainTaskId;
 	private BigInteger blockNumber;
 	private BigInteger duration;
 
-	public TaskInterruptedEvent(String chainTaskId, BigInteger blockNumber, BigInteger duration) {
+	public TaskInterruptEvent(String chainTaskId, BigInteger blockNumber, BigInteger duration) {
 		this.chainTaskId = chainTaskId;
 		this.blockNumber = blockNumber;
 		this.duration = duration;
 	}
 
-	public TaskInterruptedEvent(IexecHubContract.TaskInterruptEventResponse taskInterruptedEventResponse) {
-		this.chainTaskId = BytesUtils.bytesToString(taskInterruptedEventResponse.taskid);
-		this.blockNumber = taskInterruptedEventResponse.log.getBlockNumber();
-		this.duration = taskInterruptedEventResponse.finalDuration;
+	public TaskInterruptEvent(IexecHubContract.TaskInterruptEventResponse taskInterruptEventResponse) {
+		this.chainTaskId = BytesUtils.bytesToString(taskInterruptEventResponse.taskid);
+		this.blockNumber = taskInterruptEventResponse.log.getBlockNumber();
+		this.duration = taskInterruptEventResponse.finalDuration;
 	}
 
 }

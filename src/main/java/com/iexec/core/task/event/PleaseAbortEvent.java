@@ -14,34 +14,17 @@
  * limitations under the License.
  */
 
-package com.iexec.core.configuration;
+package com.iexec.core.task.event;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.annotation.Version;
-
-import java.math.BigInteger;
+import lombok.*;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
 @Builder
-class Configuration {
+public class PleaseAbortEvent {
 
-    @Id
-    private String id;
-
-    @Version
-    private Long version;
-
-    private BigInteger lastSeenBlockWithDeal;
-    
-    private BigInteger lastSeenBlockWithExtendedEvent;
-    
-    private BigInteger lastSeenBlockWithInterruptEvent;
-
+    private String chainTaskId;
 }
-

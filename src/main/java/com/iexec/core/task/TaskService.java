@@ -68,7 +68,8 @@ public class TaskService {
             long maxExecutionTime,
             String tag,
             Date contributionDeadline,
-            Date finalDeadline
+            Date finalDeadline,
+            boolean service
     ) {
         return taskRepository
                 .findByChainDealIdAndTaskIndex(chainDealId, taskIndex)
@@ -81,6 +82,7 @@ public class TaskService {
                 .orElseGet(() -> {
                         Task newTask = new Task(chainDealId, taskIndex, imageName,
                                 commandLine, trust, maxExecutionTime, tag);
+                        newTask.setService(service);
                         newTask.setDealBlockNumber(dealBlockNumber);
                         newTask.setFinalDeadline(finalDeadline);
                         newTask.setContributionDeadline(contributionDeadline);
