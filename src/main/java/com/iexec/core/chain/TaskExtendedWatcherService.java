@@ -116,16 +116,15 @@ public class TaskExtendedWatcherService {
         long oldDuration = task.getMaxExecutionTime();
         long finalDeadline = task.getFinalDeadline().getTime();
         
-        log.info("Task Duration extension request [taskId:{}, new duration:{}, old duration:{}, old deadline:{}]", taskId, newDuration, task.getMaxExecutionTime(), task.getFinalDeadline().getTime());
+        log.info("Task Duration extension requestt [taskId:{}, new duration:{}, old duration:{}, old deadline:{}]", taskId, newDuration, task.getMaxExecutionTime(), task.getFinalDeadline().getTime());
 
-        
         Date newDeadline = new Date(finalDeadline - oldDuration * 1000 + newDuration * 1000);
-        task.setFinalDeadline(newDeadline);
-        task.setContributionDeadline(newDeadline);
-        task.setMaxExecutionTime(newDuration);
+        
+        taskService.updateTask(taskId, newDuration, newDeadline, newDeadline, false);
         
         log.info("Task Duration extended [taskId:{}, new duration:{}, old duration:{}, new deadline:{}, old deadline:{}]", taskId, task.getMaxExecutionTime(), oldDuration, task.getFinalDeadline().getTime(), finalDeadline);
-	}
+    	
+    }
 
     /*
      * Some task extended events are sometimes missed by #schedulerNoticeEventObservable method

@@ -118,10 +118,8 @@ public class TaskInterruptWatcherService {
         	long finalDeadline = task.getFinalDeadline().getTime();
             
             Date newDeadline = new Date(finalDeadline - oldDuration * 1000 + newDuration * 1000);
-            task.setInterrupted(true);
-            task.setFinalDeadline(newDeadline);
-            task.setContributionDeadline(newDeadline);
-            task.setMaxExecutionTime(newDuration);
+            
+            taskService.updateTask(taskId, newDuration, newDeadline, newDeadline, true);
             
             
             log.info("Detected TaskInteruptEvent of task:{}, isInterrupted:{}]", taskId, task.isInterrupted());

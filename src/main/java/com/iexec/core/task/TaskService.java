@@ -93,6 +93,53 @@ public class TaskService {
                         return Optional.of(newTask);
                 });
     }
+    
+    /**
+     * Save updated task in database if it already exists.
+     *
+     * @param chainDealId
+     * @param taskIndex
+     * @param dealBlockNumber
+     * @param imageName
+     * @param commandLine
+     * @param trust
+     * @param maxExecutionTime
+     * @param tag
+     * @param contributionDeadline
+     * @param finalDeadline
+     * @return optional containing the saved
+     * task, {@link Optional#empty()} otherwise.
+     */
+    public Optional<Task> updateTask(
+            String chainTaskId,
+            long maxExecutionTime,
+            Date contributionDeadline,
+            Date finalDeadline,
+            boolean isInterrupted
+    ) {
+        return taskRepository
+                .findByChainTaskId(chainTaskId)
+                .<Optional<Task>>map((task) -> {
+                    // Update the existing task here
+                	task.setFinalDeadline(finalDeadline);
+                    task.setContributionDeadline(contributionDeadline);
+                    task.setMaxExecutionTime(maxExecutionTime);
+                    task.setInterrupted(isInterrupted);
+                    
+                    // Save the updated task
+                    task = taskRepository.save(task);
+
+                    log.info("Updated existing task [chainTaskId:{}]", chainTaskId);
+
+                    return Optional.of(task); // Return an Optional containing the updated task
+                })
+                .orElseGet(() -> {
+                	log.info("No task found with id: [chainTaskId:{}]", chainTaskId);
+                	return Optional.empty();
+                });
+        
+        
+    }
 
     public Optional<Task> getTaskByChainTaskId(String chainTaskId) {
         return taskRepository.findByChainTaskId(chainTaskId);

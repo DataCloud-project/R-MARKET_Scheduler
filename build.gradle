@@ -172,7 +172,7 @@ task createVersion(type: Copy) {
 compileJava.dependsOn createVersion
 
 ext.bootJarPath    = relativePath(tasks.bootJar.outputs.files.singleFile)
-ext.gitShortCommit = '7.0.0'
+ext.gitShortCommit = '7.0.0-Datacloud'
 ext.ociImageName   = 'iexec-core'
 
 task buildImage(type: Exec) {
